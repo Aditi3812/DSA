@@ -6,19 +6,19 @@ public:
         {
             mpp[s[i]]++;
         }
-        vector<pair<int,char>>vec;
-        for(auto &it :mpp)
+        priority_queue<pair<int,char>, vector<pair<int, char>>,greater<pair<int, char>>>minh;
+        for(int i = 0 ; i <s.size(); i++)
         {
-            vec.push_back({it.second, it.first});
+            minh.push({mpp[s[i]], s[i]});
         }
-        sort(vec.begin(), vec.end());
-        reverse(vec.begin(), vec.end());
-        string fin = "";
-        for(auto& [count, ch] : vec)
+        string ans ="";
+       while(!minh.empty())
         {
-            fin.append(count, ch);
+            ans+=minh.top().second;
+            minh.pop();
         }
-        return fin;
+        reverse(ans.begin(), ans.end());
+        return ans;
     }
 };
 
