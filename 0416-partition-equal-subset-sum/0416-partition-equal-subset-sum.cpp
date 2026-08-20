@@ -1,40 +1,44 @@
 class Solution {
 public:
-    bool part(vector<int>&nums, int target, int n, vector<vector<int>>&t)
-    {
-        if(target == 0)
-        {
-            return true;
-        }
-        if (n == 0) return false;
-        if(t[n][target]!= -1)
-        {
-            return t[n][target];
-        }
-        if(nums[n-1]>target)
-        {
-            return t[n][target]=part(nums, target, n-1, t);
-        }
-        else 
-        {
-            return t[n][target]= (part(nums, target-nums[n-1], n-1,t)|| part(nums, target, n-1,t));
-        }
-    }
     bool canPartition(vector<int>& nums) {
         int sum = 0;
         for(int i = 0 ; i <nums.size(); i++)
         {
             sum+=nums[i];
         }
+        vector<vector<bool>>t(nums.size()+1, vector<bool>(sum/2+1,false));
         if(sum%2 ==0)
         {
-            vector<vector<int>>t(nums.size()+1, vector<int>(sum/2+1,-1));
-            return part(nums,sum/2, nums.size(),t);
+            for(int i = 0 ; i <nums.size()+1; i++)
+            {
+                for(int j = 0; j <sum/2+1; j++)
+                {
+                    if (j == 0)
+                    {
+                        t[i][j] = true;
+                        continue;
+                    }
+                    if(i==0)
+                    {
+                        t[i][j] =false;
+                        continue;
+                    }
+                    if(nums[i-1]>j)
+                    {
+                        t[i][j] = t[i-1][j];
+                    }
+                    else if (nums[i-1]<=j)
+                    {
+                        t[i][j] = t[i-1][j- nums[i-1]]||t[i-1][j];
+                    }
+                }
+            }
         }
         else
         {
             return false;
         }
+        return t[nums.size()][sum/2];
     }
 };
 
