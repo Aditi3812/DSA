@@ -3,8 +3,6 @@ public:
 vector<string>ans;
     void solve(vector<string>&ans,string &op, int o, int c)
     {
-        string op1="";
-        string op2="";
         if(o==0 && c==0)
         {
             ans.push_back(op);
@@ -12,13 +10,16 @@ vector<string>ans;
         }
         if(o!=0)
         {
-            op1=op+'(';
-            solve(ans,op1,o-1,c);
+            op=op+'(';
+            solve(ans,op,o-1,c);
+            op.pop_back();
+            
         }
         if(c>o)
         {
-            op2 = op+')';
-            solve(ans,op2,o,c-1);
+            op=op+')';
+            solve(ans,op,o,c-1);
+            op.pop_back();
         }
         
     }
