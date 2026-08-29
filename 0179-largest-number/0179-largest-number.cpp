@@ -10,17 +10,9 @@ public:
         {
             return a+b<b+a;
         });
-        int i = 0;
-        while(i <n.size() && n[i]=="0")
-        {
-            i++;
-        }
-        if(i==n.size())
-        {
-            return "0";
-        }
         string ans="";
-        for(; i <n.size(); i++)
+        if(n[0]=="0")return "0";
+        for(int i =0 ; i <n.size(); i++)
         {
             ans+=n[i];
         }
