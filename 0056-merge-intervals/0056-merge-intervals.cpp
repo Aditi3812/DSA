@@ -1,22 +1,34 @@
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& in) {
-      if(in.size()==0) return{};
-      sort(in.begin(), in.end());
-      vector<vector<int>>ans;
-      ans.push_back(in[0]);
-      for(int i = 1; i <in.size(); i++)
-      {
-        if(in[i][0]<=ans.back()[1])
+        vector<vector<int>>ans;
+        int i = 1; 
+        int n= in.size();
+        sort(in.begin(),in.end());
+        if(n<=1)return in;
+        vector<int>nin=in[0];
+        while(i<n)
         {
-            ans.back()[1]= max(ans.back()[1], in[i][1]);
+            while(i<n && nin[1]<in[i][0])
+            {
+                ans.push_back(nin);
+                nin=in[i];
+                i++;
+                continue;
+            }
+            while(i<n && in[i][0]<=nin[1])
+            {
+                nin[0] = min(nin[0],in[i][0]);
+                nin[1] = max(nin[1],in[i][1]);
+                i++;
+            }
+            ans.push_back(nin);
+            if(i<n)
+            {
+                nin = in[i];
+            }
         }
-        else
-        {
-            ans.push_back(in[i]);
-        }
-      }
-      return ans;
+        return ans;
     }
 };
 
